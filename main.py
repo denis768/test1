@@ -18,10 +18,14 @@ from apscheduler.triggers.cron import CronTrigger
 from apscheduler.jobstores.memory import MemoryJobStore
 
 # ---------- НАСТРОЙКИ ----------
-API_TOKEN = "8604277117:AAGeHqTCidTZ0WLFCSssw07Txqrd83D-F8Y"           # Токен бота
-GROUP_CHAT_ID = -5287608002         # ID группы (начинается с -100 для супергрупп)
-ADMIN_IDS = [5726645385]       # Список Telegram ID администраторов
-TIMEZONE = "Europe/Moscow"              # Ваш часовой пояс
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+API_TOKEN = os.environ.get("BOT_TOKEN")
+GROUP_CHAT_ID = int(os.environ.get("GROUP_CHAT_ID", "0"))
+ADMIN_IDS = [int(x) for x in os.environ.get("ADMIN_IDS", "").split(",") if x]
+TIMEZONE = os.environ.get("TIMEZONE", "Europe/Moscow")
 # --------------------------------
 
 jobstores = {'default': MemoryJobStore()}
